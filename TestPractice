@@ -1,0 +1,133 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <deque>
+
+using namespace std;
+
+class Subject {
+private:
+    deque<string> subjects;
+
+public:
+    // Constructor: Read subjects from file
+    Subject() {
+        ifstream file("Subject.txt");
+
+        if (!file) {
+            cerr << "Error: Unable to open file!" << endl;
+            return;
+        }
+
+        string subject;
+        while (getline(file, subject)) {
+            subjects.push_back(subject);
+        }
+
+        file.close();
+    }
+
+    // Display available subjects
+    void displaySubject() {
+        cout << "These are the available subjects:" << endl;
+        for (size_t i = 0; i < subjects.size(); ++i) {
+            cout << i + 1 << ". " << subjects[i] << endl;
+        }
+    }
+
+    // Get subject by index
+    string getSubject(int line) {
+        if (line > 0 && line <= (int)subjects.size()) {
+            return subjects[line - 1];
+        }
+        return "Invalid Selection";
+    }
+
+    // Delete subject by index
+    void deleteSubject(int lineNumber) {
+        if (lineNumber > 0 && lineNumber <= (int)subjects.size()) {
+            subjects.erase(subjects.begin() + lineNumber - 1);
+        }
+    }
+};
+
+class Student {
+private:
+    string surName;
+    string firstName;
+    string school;
+    string programme;
+    deque<string> registeredSubjects;
+
+public:
+    // Constructor to initialize default values
+    Student() : surName("DOE"), firstName("John"), school("ABC University"), programme("Arts") {}
+
+    // Register subject (max 3 subjects)
+    void registerSubject(string subject) {
+        if (registeredSubjects.size() < 3) {
+            for (size_t i = 0; i < registeredSubjects.size(); ++i) {
+                if (subject == registeredSubjects[i]) {
+                    cout << "Subject already registered! Please select another!" << endl;
+                    return;
+                }
+            }
+            registeredSubjects.push_back(subject);
+        } else {
+            cout << "Cannot register more than 3 subjects!" << endl;
+        }
+    }
+
+    // Print registered subjects
+    void printSubject() {
+        cout << "These are your registered subjects:" << endl;
+        for (size_t i = 0; i < registeredSubjects.size(); ++i) {
+            cout << i + 1 << ". " << registeredSubjects[i] << endl;
+        }
+    }
+
+    // Print student registration details
+    void printRegistration() {
+        cout << "\nStudent Registration Details:\n";
+        cout << "Name: " << surName << " " << firstName << endl;
+        cout << "School: " << school << endl;
+        cout << "Programme: " << programme << endl;
+        cout << "Subjects Registered:" << endl;
+        for (size_t i = 0; i < registeredSubjects.size(); ++i) {
+            cout << i + 1 << ". " << registeredSubjects[i] << endl;
+        }
+    }
+};
+
+int main() {
+    Subject subjectList;
+    Student student1;
+
+    for (int i = 0; i < 3; i++) {  // Max 3 subjects
+        subjectList.displaySubject();
+        cout << endl;
+
+        int choice;
+        cout << "Select a subject number: ";
+        cin >> choice;
+        cout << endl;
+
+        string selectedSubject = subjectList.getSubject(choice);
+
+        if (selectedSubject == "Invalid Selection") {
+            cout << "Invalid choice. Please try again.\n" << endl;
+            i--;  // Allow retry
+            continue;
+        }
+
+        student1.registerSubject(selectedSubject);
+        subjectList.deleteSubject(choice);
+        student1.printSubject();
+        cout << endl;
+    }
+
+    student1.printRegistration();
+
+	system("pause");
+    return 0;
+}
