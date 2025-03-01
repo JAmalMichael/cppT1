@@ -1,0 +1,26 @@
+Write a C++ program that have two classes Subject and Student class. 
+The Subject class has data member subject:<array of string> that hold 
+the data in the file subject.dat. Also included in the class are the 
+member functions DisplaySubject(), getSubject()and deleteSubject() in 
+which the latter two functions takes in argument of type integer that 
+corresponds to the line number of a subject in the file starting from the first line. 
+The class constructor reads in the subject.dat file into the subject variable while 
+the DisplaySubject() displays the list of the subjects.
+
+The Student class consist of data members Surname, Firstname, School, Programme 
+(Science, Arts or Social Science)
+ and Subject. It also has member functions PrintSubject() that prints the list to 
+the screen as shown in the format shown in Fig. B.  The RegisterSubject() allows 
+the student to register exactly three subjects non-repeating. The PrintRegistration() 
+displays the student’s names, School, Programme and the subjects in cascading order 
+as depicted in Fig C. The constructor within the Student class is used initialize the 
+class variables for student to John DOE, ABC University, Arts and blank subjects value.
+
+In the main function, instantiate objects of class Subject and Students. 
+Display the list of subjects and asked the user to choice one. Query the Subject 
+object to return a subject from the list based on your choice. Pass the returned 
+subject and number 1 to the Student object to register the subject. Using the 
+subject number chosen, delete the subject from the Subject object and then print 
+the list of register subject from the Student object. Repeat this process three time 
+and in each case increase the number passed to the Student object by one. 
+Finally using the Student object print the registered student information on the screen.
